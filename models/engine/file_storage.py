@@ -21,9 +21,19 @@ class FileStorage:
        Private class attributes:
        __file_path <string>: path to the JSON file
        __objects <dictionary>: store all objects by '<class name>.id'
+       __classes <dictionary>: store all available Classes for AirBnb Project
     """
     __file_path = "file.json"
     __objects = {}
+    __classes = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'Place': Place,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Review': Review
+        }
 
     def all(self):
         """Returns the class attribute '__objects <dictionary>'"""
@@ -36,7 +46,7 @@ class FileStorage:
 
     def save(self):
         """Serializes '__objects' to the JSON file '__file_path'"""
-        dict_to_json = FileStorage.__objects.copy()  # should or not be a copy?
+        dict_to_json = FileStorage.__objects
         dict_to_json = {k: v.to_dict() for k, v in dict_to_json.items()}
         with open(FileStorage.__file_path, 'w', encoding='utf-8') as jfile:
             json.dump(dict_to_json, jfile)
@@ -50,21 +60,9 @@ class FileStorage:
         if path.exists(file):
             with open(file, 'r', encoding='utf-8') as jfile:
                 FileStorage.__objects = json.load(jfile)
-                for key, value in FileStorage.__objects.items():
+                for key, val in FileStorage.__objects.items():
                     c = FileStorage.__objects[key]['__class__']
-                    FileStorage.__objects[key] = self.find_class(c)(**value)
-
-    def find_class(self, str_class):
-        """Returns class according input to instantiate obj when is called
-        Args:
-            str_class <string>: Name of the requested Class"""
-        classes = {
-            'BaseModel': BaseModel,
-            'User': User,
-            'Place': Place,
-            'State': State,
-            'City': City,
-            'Amenity': Amenity,
-            'Review': Review
-        }
-        return classes[str_class]
+                    try:
+                        FileStorage.__objects[key] = self.__classes[c](**val)
+                    except:
+                        pass
