@@ -1,4 +1,5 @@
 # 0x00. AirBnB clone - The console
+
 ### Execution
 The console works like this in interactive mode:
 ```bash
