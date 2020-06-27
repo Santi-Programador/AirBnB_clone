@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """
 Module for BaseModel Class
-Defines all common attributes/methods for other classes for
-the AirBnB Clone Project - The Console
+Defines all common attributes/methods for other classes
+for AirBnB Clone Project - The Console
 """
 
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel:
-    """Defines the BaseModel and class attributes for all derived classes
+    """Defines the Base model and class attributes for all derived classes
        Public instance attributes:
     id <string>: Random/unique ID assigned when an instance is created
     created_at <datetime object>: current datetime when an instance is created
@@ -36,7 +36,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """Returns the string representation of an instance"""
@@ -48,7 +48,7 @@ class BaseModel:
         """Updates the instance with the current datetime
         and saves it into JSON file"""
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """Returns a dictionary with keyworded attributes of the instance:

@@ -3,15 +3,24 @@
 Module for FileStorage Class
 Data and Storage Management for the AirBnB Clone Project - The Console
 """
+
 import json
 from os import path
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
-    """Defines the FileStorage and class attributes for all derived classes
+    """Defines the File Storage and class attributes for all derived classes
+
        Private class attributes:
-    __file_path <string>: path to the JSON file
-    __objects <dictionary>: store all objects by '<class name>.id'
+       __file_path <string>: path to the JSON file
+       __objects <dictionary>: store all objects by '<class name>.id'
     """
     __file_path = "file.json"
     __objects = {}
@@ -33,13 +42,29 @@ class FileStorage:
             json.dump(dict_to_json, jfile)
 
     def reload(self):
-        """Deserializes the JSON file to '__objects'"""
-        # IT WORKS - BUT IS UNDER REFACTOR ACCORDING DIFFERENT OBJECT CLASSES
-        from models.base_model import BaseModel
+        """Deserializes the JSON file to '__objects':
+        Checks existence of the JSON file, reads data and instantiates every
+        dictionary representation according the ['__class__'] name
+        """
         file = FileStorage.__file_path
         if path.exists(file):
             with open(file, 'r', encoding='utf-8') as jfile:
-                from_json = json.load(jfile)
-                # print(from_json['BaseModel.277b0c46-a9dc-453a-ba0c-808898f242ee']['__class__'])
-                from_json = {k: BaseModel(**v) for k, v in from_json.items()}
-                FileStorage.__objects = from_json
+                FileStorage.__objects = json.load(jfile)
+                for key, value in FileStorage.__objects.items():
+                    c = FileStorage.__objects[key]['__class__']
+                    FileStorage.__objects[key] = self.find_class(c)(**value)
+
+    def find_class(self, str_class):
+        """Returns class according input to instantiate obj when is called
+        Args:
+            str_class <string>: Name of the requested Class"""
+        classes = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'Place': Place,
+            'State': State,
+            'City': City,
+            'Amenity': Amenity,
+            'Review': Review
+        }
+        return classes[str_class]
