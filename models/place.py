@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """
-Module for Place Class
-Defines all instance attributes for a Place instance
-for AirBnB Clone Project - The Console
+Module for Place Class for AirBnB Clone Project - The Console
 """
 
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
-    """Defines attributes for all Place instances
+    """Defines all instance attributes for a Place instance
 
        Public class attributes:
        city_id <string>: City.id = <Class City> + instance's id

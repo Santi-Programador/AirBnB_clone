@@ -12,6 +12,7 @@ import models
 
 class BaseModel:
     """Defines the Base model and class attributes for all derived classes
+
        Public instance attributes:
     id <string>: Random/unique ID assigned when an instance is created
     created_at <datetime object>: current datetime when an instance is created

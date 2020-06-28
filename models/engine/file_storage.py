@@ -20,8 +20,8 @@ class FileStorage:
 
        Private class attributes:
        __file_path <string>: path to the JSON file
-       __objects <dictionary>: store all objects by '<class name>.id'
-       __classes <dictionary>: store all available Classes for AirBnb Project
+       __objects <dictionary>: stores all objects by '<class name>.id'
+       __classes <dictionary>: stores all available Classes for AirBnb Project
     """
     __file_path = "file.json"
     __objects = {}
@@ -66,3 +66,8 @@ class FileStorage:
                         FileStorage.__objects[key] = self.__classes[c](**val)
                     except:
                         pass
+
+    def class_dict(self):
+        """Returns the class attribute '__classes <dictionary>'
+        which stores the available Classes for all modules"""
+        return FileStorage.__classes

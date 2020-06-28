@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """
-Module for Review Class
-Defines all instance attributes for a Review instance
-for AirBnB Clone Project - The Console
+Module for Review Class for AirBnB Clone Project - The Console
 """
 
 from models.base_model import BaseModel
 
 
 class Review(BaseModel):
-    """Defines attributes for all Review instances
+    """Defines all instance attributes for a Review instance
 
        Public class attributes:
        place_id <string>: Place.id = <Class Place> + instance's id

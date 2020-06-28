@@ -1,15 +1,13 @@
 #!/usr/bin/python3
 """
-Module for User Class
-Defines all instance attributes for a User instance
-for AirBnB Clone Project - The Console
+Module for User Class for AirBnB Clone Project - The Console
 """
 
 from models.base_model import BaseModel
 
 
 class User(BaseModel):
-    """Defines attributes for all Review instances
+    """Defines all instance attributes for a User instance
 
        Public class attributes:
        email <string>: User's e-mail
