@@ -59,16 +59,12 @@ class HBNBCommand(cmd.Cmd):
             else:
                 try:
                     cast = type(getattr(storage.all()[obj_key], attribute))
-                    print("-------", cast)
                 except AttributeError:
                     cast = type(inputs[3])
-                # check all this if checker does not pass :c
-                if attribute in dir(storage.all()[obj_key]):
-                    value = cast(inputs[3])
-                    setattr(storage.all()[obj_key], attribute, value)
-                    storage.all()[obj_key].save()
-                else:
-                    return  # Attribute does not exist!
+                # open to any attr, even those which aren't in the class' dict
+                value = cast(inputs[3])
+                setattr(storage.all()[obj_key], attribute, value)
+                storage.all()[obj_key].save()
 
     def do_show(self, arg):
         """
