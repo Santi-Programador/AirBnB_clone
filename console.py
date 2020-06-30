@@ -69,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """
         Show command to print the string representation of an instance
-        based on the class name and id
+        based on the class name and id.
         Usage: show <class name> <id>
         """
         inputs = arg.split()
@@ -140,13 +140,13 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """
         This method replaces default emptyline(), with
-        an empty line + ENTER shouldn’t execute anything
+        an empty line + ENTER shouldn’t execute anything.
         """
         return False
 
     def count(self, arg):
         """
-        Count command to retrieve the number of instances of a class
+        Count command to retrieve the number of instances of a class.
         Usage: <class name>.count()
         """
         if arg in HBNBCommand.classes:
@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def default(self, arg):
-        """Executes line when it does not match with any class method
+        """Executes line when it does not match any class method
         Arg <string>: <class name>.method("optional parameters")
         E.g. User.count()   --- <cls>.count() Must be used without parameters
              User.all()     --- <cls>.all() Must be used without parameters
