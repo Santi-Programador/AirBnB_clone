@@ -1,28 +1,14 @@
-# 0x00. AirBnB clone - The console
+![AirBnB clone - The console](https://github.com/tatsOre/AirBnB_clone/blob/master/cover_hbnb.png)
 
 ### Execution
-The console works like this in interactive mode:
-```bash
-$ ./console.py
-(hbnb) help
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
-
-(hbnb) 
-(hbnb) 
-(hbnb) quit
-$
-```
-But also in non-interactive mode:
+The console works like this in non-interactive mode:
 ```bash
 $ echo "help" | ./console.py
 (hbnb)
 
 Documented commands (type help <topic>):
 ========================================
-EOF  help  quit
+EOF  all  create  destroy  help  quit  show  update
 (hbnb) 
 $
 $ cat test_help
@@ -37,6 +23,83 @@ EOF  help  quit
 (hbnb) 
 $
 ```
+But also in interactive mode: **Use help command followed by <command> to get specific information about usage**
+```bash
+$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  all  create  destroy  help  quit  show  update
+
+(hbnb) help create
+
+        Create command to create a new instance according Class name.
+        Print the assigned id.
+        Usage: create <class name>
+        Classes: [BaseModel, User, Place, State, City, Amenity, Review]
+        
+(hbnb) 
+(hbnb) quit
+$
+```
+##### Create command (create instances): `Usage: create <class name>`
+```bash
+$ ./console.py
+(hbnb) create BaseModel
+49faff9a-6318-451f-87b6-910505c55907
+(hbnb)
+```
+##### All command:
+```bash
+$ ./console.py
+(hbnb) all BaseModel
+["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}"]
+(hbnb)
+```
+##### Show command:
+```bash
+$ ./console.py
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
+(hbnb)
+```
+#### Destroy command:
+```bash
+$ ./console.py
+(hbnb) destroy
+** class name missing **
+(hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+** no instance found **
+(hbnb)
+```
+#### Update command:
+```bash
+$ ./console.py
+(hbnb)
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
+(hbnb) destroy
+** class name missing **
+(hbnb) update BaseModel 49faff9a-6318-451f-87b6-910505c55907 first_name "Betty"
+(hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
+[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2020, 10, 2, 3, 11, 3, 49401)}
+(hbnb)
+```
+#### description:
+```bash
+$ ./console.py
+(hbnb) User.count()
+2
+(hbnb) User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
+(hbnb) User.count()
+1
+(hbnb) User.destroy("Holberton")
+** no instance found **
+(hbnb) 
+```
+
 ### Learning Objectives:
 * How to create a Python package
 * How to create a command interpreter in Python using the cmd module
