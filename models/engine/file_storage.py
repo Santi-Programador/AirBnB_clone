@@ -64,7 +64,7 @@ class FileStorage:
                     c = FileStorage.__objects[key]['__class__']
                     try:
                         FileStorage.__objects[key] = self.__classes[c](**val)
-                    except:
+                    except Exception:
                         pass
 
     def class_dict(self):
