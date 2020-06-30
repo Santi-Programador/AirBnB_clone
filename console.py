@@ -5,6 +5,7 @@
 
 import cmd
 import shlex
+import re
 from models import storage
 
 
@@ -53,7 +54,6 @@ class HBNBCommand(cmd.Cmd):
             obj_id = inputs[1]
             attribute = inputs[2]
             obj_key = "{}.{}".format(obj_cls, obj_id)
-            # print("-----", dir(storage.all()[obj_key]))
             if obj_key not in storage.all():
                 print("** no instance found **")
             else:
@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
                     cast = type(getattr(storage.all()[obj_key], attribute))
                 except AttributeError:
                     cast = type(inputs[3])
-                # open to any attr, even those which aren't in the class' dict
+                # open to any attr, even those which are not defined
                 value = cast(inputs[3])
                 setattr(storage.all()[obj_key], attribute, value)
                 storage.all()[obj_key].save()
@@ -111,8 +111,8 @@ class HBNBCommand(cmd.Cmd):
         All command to print all string representation of all instances
         based or not on the class name.
         Usage: all <class name (optional)>
-        Ex: all               ---- Prints all instances
-            all User          ---- Prints User instances
+        E.g. all               ---- Prints all instances
+             all User          ---- Prints User instances
         """
         inputs = arg.split()
         objs = storage.all()
@@ -143,6 +143,48 @@ class HBNBCommand(cmd.Cmd):
         an empty line + ENTER shouldn’t execute anything
         """
         return False
+
+    def count(self, arg):
+        """
+        Count command to retrieve the number of instances of a class
+        Usage: <class name>.count()
+        """
+        if arg in HBNBCommand.classes:
+            c = 0
+            for obj in storage.all().values():
+                c += 1 if obj.__class__.__name__ == arg else 0
+            print(c)
+        else:
+            print("** class doesn't exist **")
+
+    def default(self, arg):
+        """Executes line when it does not match with any class method
+        Arg <string>: <class name>.method("optional parameters")
+        E.g. User.count()   --- <cls>.count() Must be used without parameters
+             User.all()     --- <cls>.all() Must be used without parameters
+             User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
+        """
+        s_rgx = re.search(r"^(\w+)\.(\w+)\(\)$", arg)
+        a_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\)$", arg)
+        if s_rgx:
+            cls_arg = s_rgx.group(1)
+            fnc_arg = s_rgx.group(2)
+            if fnc_arg == 'all':
+                self.do_all(cls_arg)
+            elif fnc_arg == 'count':
+                self.count(cls_arg)
+        elif a_rgx:
+            # print("----arg---->", arg)
+            a = arg.replace('.', ',', 1)
+            args_ls = re.split('[()",]', a)
+            lst = [i for i in args_ls if i and i != ' ']
+            lst[0], lst[1] = lst[1], lst[0]
+            if lst[0] == 'update':  # update works wrong
+                line = " ".join(lst[0:-1]) + " " + "'" + lst[-1] + "'"
+            else:
+                line = " ".join(lst)
+            # print("-------->", line)
+            self.onecmd(line)
 
 
 if __name__ == '__main__':
