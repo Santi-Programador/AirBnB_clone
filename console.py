@@ -179,7 +179,7 @@ class HBNBCommand(cmd.Cmd):
             args_ls = re.split('[()",]', a)
             lst = [i for i in args_ls if i and i != ' ']
             lst[0], lst[1] = lst[1], lst[0]
-            if lst[0] == 'update':  # update works wrong
+            if lst[0] == 'update':  # update should be fixed
                 line = " ".join(lst[0:-1]) + " " + "'" + lst[-1] + "'"
             else:
                 line = " ".join(lst)
