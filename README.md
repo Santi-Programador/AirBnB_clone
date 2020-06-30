@@ -1,13 +1,13 @@
 ![AirBnB clone - The console](https://github.com/tatsOre/AirBnB_clone/blob/master/cover_hbnb.png)
 
-### Description 
+## Description 
 
-### Installation
+## Installation
 All files are interpreted/compiled on Ubuntu 14.04 LTS using python3 (version 3.4.3)
-Clone repository: git clone "https://github.com/tatsOre/AirBnB_clone.git"
-Go to AirBnb directory: cd AirBnB_clone
+* Clone repository: git clone "https://github.com/tatsOre/AirBnB_clone.git"
+* Access to AirBnb directory: cd AirBnB_clone
 
-### Execution
+## Execution
 The console executes in non-interactive mode:
 ```bash
 $ echo "help" | ./console.py
@@ -19,7 +19,7 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) 
 $
 ```
-But also in interactive mode: **Use help command followed by <command> to get specific information about usage**
+But also in interactive mode: **Use help command followed by < command > to get specific information about usage**
 ```bash
 $ ./console.py
 (hbnb) help
@@ -39,7 +39,17 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 $
 ```
-#### Examples of use
+## Command interpreter options:
+* create - Creates a new instance based on the <class name>, saves it (to a JSON file) and prints the <id>. Ex: `$ create BaseModel`
+* show - Prints the string representation of an instance based on the <class name> and <id>. Ex: `$ show BaseModel 1234-1234-1234`
+* destroy: Deletes an instance based on the <class name> and <id> (saves changes into a JSON file). Ex: `$ destroy BaseModel 1234-1234-1234`
+* all: Prints all string representation of all instances based or not on the <class name>. Ex: `$ all BaseModel` or `$ all`
+* update: Updates an instance based on the <class name> and <id> by adding or updating attribute (saves changes into a JSON file). Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@holbertonschool.com"`
+* EOF - Quits the program by EOF (CTRL+D).
+* quit - Exits the console.
+* <emptyline> - Replaces default emptyline(), with an empty line + ENTER.
+
+## Examples of use
 ```bash
 $ ./console.py
 (hbnb) create BaseModel
@@ -52,6 +62,7 @@ $ ./console.py
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
 (hbnb)
 ```
+
 ```bash
 $ ./console.py
 (hbnb) destroy
@@ -72,17 +83,19 @@ $ ./console.py
 
 ```bash
 $ ./console.py
+(hbnb) User.all()
+["[User] (2fcc6d8d-ec16-4155-8683-ea92b9ab583b) {'id': '2fcc6d8d-ec16-4155-8683-ea92b9ab583b', 'created_at': datetime.datetime(2020, 6, 30, 15, 57, 55, 166650), 'updated_at': datetime.datetime(2020, 6, 30, 15, 57, 55, 166675)}", "[User] (785e3e40-8afd-443f-a737-4cfa475cc70c) {'id': '785e3e40-8afd-443f-a737-4cfa475cc70c', 'created_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386424), 'updated_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386444)}"]
 (hbnb) User.count()
 2
-(hbnb) User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
+(hbnb) User.destroy("2fcc6d8d-ec16-4155-8683-ea92b9ab583b")
 (hbnb) User.count()
 1
-(hbnb) User.destroy("Holberton")
+(hbnb) User.destroy("Goodbye to All")
 ** no instance found **
 (hbnb) 
 ```
 
-### Learning Objectives:
+### Project Learning Objectives:
 * How to create a Python package
 * How to create a command interpreter in Python using the cmd module
 * What is Unit testing and how to implement it in a large project
