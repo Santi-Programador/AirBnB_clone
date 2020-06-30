@@ -1,7 +1,14 @@
 ![AirBnB clone - The console](https://github.com/tatsOre/AirBnB_clone/blob/master/cover_hbnb.png)
 
+### Description 
+
+### Installation
+All files are interpreted/compiled on Ubuntu 14.04 LTS using python3 (version 3.4.3)
+Clone repository: git clone "https://github.com/tatsOre/AirBnB_clone.git"
+Go to AirBnb directory: cd AirBnB_clone
+
 ### Execution
-The console works like this in non-interactive mode:
+The console executes in non-interactive mode:
 ```bash
 $ echo "help" | ./console.py
 (hbnb)
@@ -9,17 +16,6 @@ $ echo "help" | ./console.py
 Documented commands (type help <topic>):
 ========================================
 EOF  all  create  destroy  help  quit  show  update
-(hbnb) 
-$
-$ cat test_help
-help
-$
-$ cat test_help | ./console.py
-(hbnb)
-
-Documented commands (type help <topic>):
-========================================
-EOF  help  quit
 (hbnb) 
 $
 ```
@@ -43,28 +39,19 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 $
 ```
-##### Create command (create instances): `Usage: create <class name>`
+#### Examples of use
 ```bash
 $ ./console.py
 (hbnb) create BaseModel
 49faff9a-6318-451f-87b6-910505c55907
 (hbnb)
-```
-##### All command:
-```bash
-$ ./console.py
 (hbnb) all BaseModel
 ["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}"]
 (hbnb)
-```
-##### Show command:
-```bash
-$ ./console.py
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
 (hbnb)
 ```
-#### Destroy command:
 ```bash
 $ ./console.py
 (hbnb) destroy
@@ -72,11 +59,6 @@ $ ./console.py
 (hbnb) destroy BaseModel 49faff9a-6318-451f-87b6-910505c55907
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
 ** no instance found **
-(hbnb)
-```
-#### Update command:
-```bash
-$ ./console.py
 (hbnb)
 (hbnb) show BaseModel 49faff9a-6318-451f-87b6-910505c55907
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
@@ -87,7 +69,7 @@ $ ./console.py
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2020, 10, 2, 3, 11, 3, 49401)}
 (hbnb)
 ```
-#### description:
+
 ```bash
 $ ./console.py
 (hbnb) User.count()
