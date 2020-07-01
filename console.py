@@ -198,7 +198,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** class name missing **")
         elif arg_rgx:
-            # Commands with parameters
+            # Commands with arguments
             command = arg_rgx.group(2)
             class_name = arg_rgx.group(1)
             param = arg_rgx.group(3).replace(',', '')

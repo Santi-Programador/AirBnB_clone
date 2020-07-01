@@ -1,6 +1,21 @@
 ![AirBnB clone - The console](https://github.com/tatsOre/AirBnB_clone/blob/master/cover_hbnb.png)
 
-## Description 
+## Description
+This is the first step towards building a full web application: the AirBnB clone. This is the first stage to the project that will include the following: HTML/CSS templating, database storage, API, and front-end integration.
+
+Each project's task is intended to:
+* put in place a parent class (called BaseModel) to take care of the initialization, serialization and deserialization of instances.
+* create a simple flow of serialization/deserialization: `Instance <-> Dictionary <-> JSON string <-> file`
+* create all classes used for AirBnB (User, State, City, Place…) that inherit from BaseModel.
+* create the first abstracted storage engine of the project: File storage.
+* create all unittests to validate all classes and storage engine.
+
+### Command interpreter functionalities:
+* Create a new object (ex: a new User or a new Place)
+* Retrieve an object from a file, a database etc…
+* Do operations on objects (count, compute stats, etc…)
+* Update attributes of an object
+* Destroy an object
 
 ## Installation
 All files are interpreted/compiled on Ubuntu 14.04 LTS using python3 (version 3.4.3)
