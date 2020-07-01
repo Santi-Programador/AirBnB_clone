@@ -65,3 +65,74 @@ test_file_storage.py'])
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
                             "{:s} method needs a docstring".format(func[0]))
+
+
+class TestFileStorage(unittest.TestCase):
+    """TestFileStorage: to test FileStorage Class"""
+    @classmethod
+    def setUpClass(cls):
+        """
+        set storage variable to test
+        """
+        cls.storage = FileStorage()
+
+    def test_filestoragepyfile(self):
+        """test file file_storage.py permissions file"""
+        self.assertTrue(os.access('models/engine/file_storage.py', os.R_OK))
+        self.assertTrue(os.access('models/engine/file_storage.py', os.W_OK))
+        self.assertTrue(os.access('models/engine/file_storage.py', os.X_OK))
+
+    def test_all(self):
+        """Test return dictionary __objects"""
+        storage = FileStorage()
+        dictionary = storage.all()
+        self.assertIsNotNone(dictionary)
+        self.assertEqual(type(dictionary), dict)
+        self.assertIs(dictionary, storage._FileStorage__objects)
+
+    def test_new(self):
+        """Test if saves object into dictionary"""
+        storage = FileStorage()
+        dictionary = storage.all()
+        x = User()
+        x.id = "56d43177-cc5f-4d6c-a0c1-e167f8c27337"
+        x.name = "Winston Smith"
+        storage.new(x)
+        key = x.__class__.__name__ + "." + str(x.id)
+        self.assertIsNotNone(dictionary[key])
+
+    def test_reload(self):
+        """Test if reloads objects from json file in dictionary"""
+        self.storage.save()
+        path = os.path.dirname(os.path.abspath("console.py"))
+        fd = os.path.join(path, "file.json")
+        with open(fd, 'r') as f:
+            lines = f.readlines()
+
+        try:
+            os.remove(pt)
+        except BaseException:
+            pass
+
+        self.storage.save()
+
+        with open(fd, 'r') as f:
+            lines2 = f.readlines()
+
+        self.assertEqual(lines, lines2)
+
+        try:
+            os.remove(pt)
+        except BaseException:
+            pass
+
+        with open(fd, "w") as f:
+            f.write("{}")
+        with open(fd, "r") as r:
+            for line in r:
+                self.assertEqual(line, "{}")
+
+        self.assertIs(self.storage.reload(), None)
+
+if __name__ == "__main__":
+    unittest.main()
