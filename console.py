@@ -6,6 +6,7 @@
 import cmd
 import shlex
 import re
+import json
 from models import storage
 
 
@@ -164,28 +165,49 @@ class HBNBCommand(cmd.Cmd):
              User.all()     --- <cls>.all() Must be used without parameters
              User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
         """
-        s_rgx = re.search(r"^(\w+)\.(\w+)\(\)$", arg)
-        a_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\)$", arg)
-        if s_rgx:
-            cls_arg = s_rgx.group(1)
-            fnc_arg = s_rgx.group(2)
+        met_rgx = re.search(r"^(\w+)\.(\w+)\(\)$", arg)
+        arg_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\)$", arg)
+        dic_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\,\s+(\{[^)]+\})\)$", arg)
+        if met_rgx:
+            """For methods self.count() and self.do_all()"""
+            cls_arg = met_rgx.group(1)
+            fnc_arg = met_rgx.group(2)
             if fnc_arg == 'all':
                 self.do_all(cls_arg)
             elif fnc_arg == 'count':
                 self.count(cls_arg)
-        elif a_rgx:
+        elif dic_rgx:
+            """Update instance's values from dictionary"""
+            command = dic_rgx.group(2)
+            class_name = dic_rgx.group(1)
+            obj_id = dic_rgx.group(3).replace('"', '')
+            try:
+                obj_dic = json.loads(dic_rgx.group(4).replace("'", '"'))
+            except Exception:
+                print("** value missing **")
+                return
+            """Update values through console"""
+            if class_name in HBNBCommand.classes and command == 'update':
+                for key, value in obj_dic.items():
+                    line = command + ' ' + class_name + ' ' + obj_id + ' '
+                    line += key + ' ' + "'" + str(value) + "'"
+                    self.onecmd(line)
+                    # print("--->", key, value)
+            else:
+                print("** class name missing **")
+        elif arg_rgx:
+            """Commands with arguments"""
             # print("----arg---->", arg)
             a = arg.replace('.', ',', 1)
             args_ls = re.split('[()",]', a)
             lst = [i for i in args_ls if i and i != ' ']
             lst[0], lst[1] = lst[1], lst[0]
-            if lst[0] == 'update':  # update should be fixed
+            if lst[0] == 'update':
                 line = " ".join(lst[0:-1]) + " " + "'" + lst[-1] + "'"
             else:
                 line = " ".join(lst)
             # print("-------->", line)
             self.onecmd(line)
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
