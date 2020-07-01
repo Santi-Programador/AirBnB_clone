@@ -40,14 +40,14 @@ EOF  all  create  destroy  help  quit  show  update
 $
 ```
 ## Command interpreter options:
-* create - Creates a new instance based on the <class name>, saves it (to a JSON file) and prints the <id>. Ex: `$ create BaseModel`
-* show - Prints the string representation of an instance based on the <class name> and <id>. Ex: `$ show BaseModel 1234-1234-1234`
-* destroy: Deletes an instance based on the <class name> and <id> (saves changes into a JSON file). Ex: `$ destroy BaseModel 1234-1234-1234`
-* all: Prints all string representation of all instances based or not on the <class name>. Ex: `$ all BaseModel` or `$ all`
-* update: Updates an instance based on the <class name> and <id> by adding or updating attribute (saves changes into a JSON file). Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@holbertonschool.com"`
-* EOF - Quits the program by EOF (CTRL+D).
-* quit - Exits the console.
-* <emptyline> - Replaces default emptyline(), with an empty line + ENTER.
+* **create** - Creates a new instance based on the < class name >, saves it (to a JSON file) and prints the < id >. Ex: `$ create BaseModel`
+* **show** - Prints the string representation of an instance based on the < class name > and < id >. Ex: `$ show BaseModel 1234-1234-1234`
+* **destroy** - Deletes an instance based on the < class name > and < id > (saves changes into a JSON file). Ex: `$ destroy BaseModel 1234-1234-1234`
+* **all** - Prints all string representation of all instances based or not on the < class name >. Ex: `$ all BaseModel` or `$ all`
+* **update** - Updates an instance based on the < class name > and < id > by adding or updating attribute (saves changes into a JSON file). Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@holbertonschool.com"`
+* **EOF** - Quits the program by EOF (CTRL+D).
+* **quit** - Exits the console.
+* < emptyline > - Replaces default emptyline(), with an empty line + ENTER.
 
 ## Examples of use
 ```bash
@@ -80,7 +80,7 @@ $ ./console.py
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2020, 10, 2, 3, 11, 3, 49401)}
 (hbnb)
 ```
-
+*  **Count instances and update from dictionary** - update an instance based on its ID with a dictionary: 
 ```bash
 $ ./console.py
 (hbnb) User.all()
@@ -92,7 +92,10 @@ $ ./console.py
 1
 (hbnb) User.destroy("Goodbye to All")
 ** no instance found **
-(hbnb) 
+(hbnb)
+(hbnb) User.update("785e3e40-8afd-443f-a737-4cfa475cc70c", {'first_name': "Susie", 'age': 35, 'fav_band': "Joy Division"})
+(hbnb) all
+["[User] (785e3e40-8afd-443f-a737-4cfa475cc70c) {'id': '785e3e40-8afd-443f-a737-4cfa475cc70c', 'created_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386424), 'updated_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386444), 'first_name': 'Susie', 'age': 35, 'fav_band': 'Joy Division'}"]
 ```
 
 ### Project Learning Objectives:

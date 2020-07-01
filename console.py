@@ -164,20 +164,23 @@ class HBNBCommand(cmd.Cmd):
         E.g. User.count()   --- <cls>.count() Must be used without parameters
              User.all()     --- <cls>.all() Must be used without parameters
              User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
+             User.update("38f22813-2753-4d42-b37c-57a17f1e4f88",
+                            {'first_name': "John", "age": 89})
         """
         met_rgx = re.search(r"^(\w+)\.(\w+)\(\)$", arg)
         arg_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\)$", arg)
         dic_rgx = re.search(r"^(\w+)\.(\w+)\(([^)]+)\,\s+(\{[^)]+\})\)$", arg)
+
         if met_rgx:
-            """For methods self.count() and self.do_all()"""
-            cls_arg = met_rgx.group(1)
+            # For methods self.count() and self.do_all()
+            classname = met_rgx.group(1)
             fnc_arg = met_rgx.group(2)
             if fnc_arg == 'all':
-                self.do_all(cls_arg)
+                self.do_all(classname)
             elif fnc_arg == 'count':
-                self.count(cls_arg)
+                self.count(classname)
         elif dic_rgx:
-            """Update instance's values from dictionary"""
+            # Update instance's values from dictionary through console
             command = dic_rgx.group(2)
             class_name = dic_rgx.group(1)
             obj_id = dic_rgx.group(3).replace('"', '')
@@ -186,27 +189,33 @@ class HBNBCommand(cmd.Cmd):
             except Exception:
                 print("** value missing **")
                 return
-            """Update values through console"""
             if class_name in HBNBCommand.classes and command == 'update':
                 for key, value in obj_dic.items():
+                    # 'line': input to execute through console onecmd method
                     line = command + ' ' + class_name + ' ' + obj_id + ' '
                     line += key + ' ' + "'" + str(value) + "'"
                     self.onecmd(line)
-                    # print("--->", key, value)
             else:
                 print("** class name missing **")
         elif arg_rgx:
-            """Commands with arguments"""
-            # print("----arg---->", arg)
-            a = arg.replace('.', ',', 1)
-            args_ls = re.split('[()",]', a)
-            lst = [i for i in args_ls if i and i != ' ']
-            lst[0], lst[1] = lst[1], lst[0]
-            if lst[0] == 'update':
-                line = " ".join(lst[0:-1]) + " " + "'" + lst[-1] + "'"
+            # Commands with parameters
+            command = arg_rgx.group(2)
+            class_name = arg_rgx.group(1)
+            param = arg_rgx.group(3).replace(',', '')
+            args_ls = shlex.split(param)
+            # 'line': input to execute through console with onecmd method
+            if command == 'update':
+                try:
+                    attr = args_ls[1]
+                    value = args_ls[2]
+                except Exception:
+                    print("** Attribute or Value missing **")
+                    return
+                line = command + ' ' + class_name + ' ' + args_ls[0] + ' '
+                line += attr + ' ' + "'" + str(value) + "'"
             else:
-                line = " ".join(lst)
-            # print("-------->", line)
+                line = command + ' ' + class_name + ' ' + args_ls[0]
+            # print("Line --->", line)
             self.onecmd(line)
 
 if __name__ == '__main__':
