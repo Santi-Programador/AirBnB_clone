@@ -56,7 +56,7 @@ $
 ```
 ## Supported commands
 |Command| Description | Example
-|--|--|
+|--|--|--|
 | **create** | Creates a new instance based on the [class name], saves it (to a JSON file) and prints the [ID]. | `$ create BaseModel` |
 | **show** | Prints the string representation of an instance based on the [class name] and [ID]. | `$ show BaseModel 1234-1234-1234` |
 | **destroy** | Deletes an instance based on the [class name] and [ID] (saves changes into a JSON file). | `$ destroy BaseModel 1234-1234-1234` |
