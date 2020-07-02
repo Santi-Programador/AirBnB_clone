@@ -34,7 +34,7 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) 
 $
 ```
-But also in interactive mode: **Use help command followed by < command > to get specific information about usage**
+But also in interactive mode: **Use help command followed by [command] to get specific information about usage**
 ```bash
 $ ./console.py
 (hbnb) help
@@ -54,17 +54,29 @@ EOF  all  create  destroy  help  quit  show  update
 (hbnb) quit
 $
 ```
-## Command interpreter options:
-* **create** - Creates a new instance based on the < class name >, saves it (to a JSON file) and prints the < id >. Ex: `$ create BaseModel`
-* **show** - Prints the string representation of an instance based on the < class name > and < id >. Ex: `$ show BaseModel 1234-1234-1234`
-* **destroy** - Deletes an instance based on the < class name > and < id > (saves changes into a JSON file). Ex: `$ destroy BaseModel 1234-1234-1234`
-* **all** - Prints all string representation of all instances based or not on the < class name >. Ex: `$ all BaseModel` or `$ all`
-* **update** - Updates an instance based on the < class name > and < id > by adding or updating attribute (saves changes into a JSON file). Ex: `$ update BaseModel 1234-1234-1234 email "aibnb@holbertonschool.com"`
-* **EOF** - Quits the program by EOF (CTRL+D).
-* **quit** - Exits the console.
-* < emptyline > - Replaces default emptyline(), with an empty line + ENTER.
+## Supported commands
+|Command| Description | Example
+|--|--|
+| **create** | Creates a new instance based on the [class name], saves it (to a JSON file) and prints the [ID]. | `$ create BaseModel` |
+| **show** | Prints the string representation of an instance based on the [class name] and [ID]. | `$ show BaseModel 1234-1234-1234` |
+| **destroy** | Deletes an instance based on the [class name] and [ID] (saves changes into a JSON file). | `$ destroy BaseModel 1234-1234-1234` |
+| **all** | Prints all string representation of all instances based or not on the [class name]. | `$ all BaseModel` or `$ all` | 
+| **update** | Updates an instance based on the [class name] and [ID] by adding or updating attribute (saves changes into a JSON file). | `$ update BaseModel 1234-1234-1234 email "airbnb@holbertonschool.com"`|
+| **EOF** | Quits the program by EOF (CTRL+D) | |
+| **quit** | Exits the console | |
+
+## Alternative usage
+|Command| Example |
+|--|--|
+|[class name].all()| BaseModel.all() |
+|[class name].count()| BaseModel.count() |
+|[class name].show()| BaseModel.show() |
+|[class name].destroy()| BaseModel.destroy() |
+|[class name].update([ID], [class attribute], [attribute value])| User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", "first_name", "Thor") |
+|(class name).update([ID], [dictionary])| User.update("38f22813-2753-4d42-b37c-57a17f1e4f88", {'first_name': "Charlie", "age": 30}) |
 
 ## Examples of use
+* Create instances based on the Class Name and visualize them according ID, or class name:
 ```bash
 $ ./console.py
 (hbnb) create BaseModel
@@ -77,7 +89,7 @@ $ ./console.py
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903300)}
 (hbnb)
 ```
-
+* Update or delete instances:
 ```bash
 $ ./console.py
 (hbnb) destroy
@@ -95,7 +107,7 @@ $ ./console.py
 [BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'first_name': 'Betty', 'id': '49faff9a-6318-451f-87b6-910505c55907', 'created_at': datetime.datetime(2020, 10, 2, 3, 10, 25, 903293), 'updated_at': datetime.datetime(2020, 10, 2, 3, 11, 3, 49401)}
 (hbnb)
 ```
-*  **Count instances and update from dictionary** - update an instance based on its ID with a dictionary: 
+* Count instances and update them from a dictionary: 
 ```bash
 $ ./console.py
 (hbnb) User.all()
@@ -109,7 +121,7 @@ $ ./console.py
 ** no instance found **
 (hbnb)
 (hbnb) User.update("785e3e40-8afd-443f-a737-4cfa475cc70c", {'first_name': "Susie", 'age': 35, 'fav_band': "Joy Division"})
-(hbnb) all
+(hbnb) User.all()
 ["[User] (785e3e40-8afd-443f-a737-4cfa475cc70c) {'id': '785e3e40-8afd-443f-a737-4cfa475cc70c', 'created_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386424), 'updated_at': datetime.datetime(2020, 6, 30, 15, 58, 0, 386444), 'first_name': 'Susie', 'age': 35, 'fav_band': 'Joy Division'}"]
 ```
 
@@ -138,10 +150,11 @@ $ ./console.py
 * [Args & Kwargs](https://realpython.com/python-kwargs-and-args/)
 * [Python Packages](https://realpython.com/python-modules-packages/#python-packages)
 * [How To Use *args and **kwargs in Python 3](https://www.digitalocean.com/community/tutorials/how-to-use-args-and-kwargs-in-python-3)
+* [Regular Expressions: Regexes in Python (Part 1)](https://realpython.com/regex-python/)
 
 ### Authors:
 * Juan Felipe Bustamante Muñoz | [Github](https://github.com/jfbm74)
 * Tatiana Orejuela Zapata | [Github](https://github.com/tatsOre)
 
-##### Foundations - Higher-level programming ― AirBnB clone
-##### June, 2020. Cali, Colombia.
+##### Holberton School - Foundations - Higher-level programming ― AirBnB clone
+##### July, 2020. Cali, Colombia.

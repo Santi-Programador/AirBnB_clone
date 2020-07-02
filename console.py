@@ -51,10 +51,10 @@ class HBNBCommand(cmd.Cmd):
         elif len(inputs) < 4:
             print("** value missing **")
         else:
-            obj_cls = inputs[0]
+            class_name = inputs[0]
             obj_id = inputs[1]
             attribute = inputs[2]
-            obj_key = "{}.{}".format(obj_cls, obj_id)
+            obj_key = "{}.{}".format(class_name, obj_id)
             if obj_key not in storage.all():
                 print("** no instance found **")
             else:
@@ -140,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """
-        This method replaces default emptyline(), with
+        This command replaces default emptyline(), with
         an empty line + ENTER shouldn’t execute anything.
         """
         return False
@@ -159,8 +159,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def default(self, arg):
-        """Executes line when it does not match any class method
-        Arg <string>: <class name>.method("optional parameters")
+        """Executes line when it does not match any class command
+        Arg <string>: <class name>.command("optional parameters")
         E.g. User.count()   --- <cls>.count() Must be used without parameters
              User.all()     --- <cls>.all() Must be used without parameters
              User.destroy("246c227a-d5c1-403d-9bc7-6a47bb9f0f68")
@@ -173,12 +173,12 @@ class HBNBCommand(cmd.Cmd):
 
         if met_rgx:
             # For methods self.count() and self.do_all()
-            classname = met_rgx.group(1)
-            fnc_arg = met_rgx.group(2)
-            if fnc_arg == 'all':
-                self.do_all(classname)
-            elif fnc_arg == 'count':
-                self.count(classname)
+            class_name = met_rgx.group(1)
+            command = met_rgx.group(2)
+            if command == 'all':
+                self.do_all(class_name)
+            elif command == 'count':
+                self.count(class_name)
         elif dic_rgx:
             # Update instance's values from dictionary through console
             command = dic_rgx.group(2)
@@ -192,8 +192,8 @@ class HBNBCommand(cmd.Cmd):
             if class_name in HBNBCommand.classes and command == 'update':
                 for key, value in obj_dic.items():
                     # 'line': input to execute through console onecmd method
-                    line = command + ' ' + class_name + ' ' + obj_id + ' '
-                    line += key + ' ' + "'" + str(value) + "'"
+                    line = '{} {} {} {} "{}"'.format(
+                            command, class_name, obj_id, key, str(value))
                     self.onecmd(line)
             else:
                 print("** class name missing **")
@@ -201,20 +201,20 @@ class HBNBCommand(cmd.Cmd):
             # Commands with arguments
             command = arg_rgx.group(2)
             class_name = arg_rgx.group(1)
-            param = arg_rgx.group(3).replace(',', '')
-            args_ls = shlex.split(param)
-            # 'line': input to execute through console with onecmd method
+            arguments = arg_rgx.group(3).replace(',', '')
+            args_ls = shlex.split(arguments)
+            # 'line': input to execute through console with onecmd command
             if command == 'update':
                 try:
-                    attr = args_ls[1]
+                    attribute = args_ls[1]
                     value = args_ls[2]
                 except Exception:
                     print("** Attribute or Value missing **")
                     return
-                line = command + ' ' + class_name + ' ' + args_ls[0] + ' '
-                line += attr + ' ' + "'" + str(value) + "'"
+                line = '{} {} {} {} "{}"'.format(
+                        command, class_name, args_ls[0], attribute, str(value))
             else:
-                line = command + ' ' + class_name + ' ' + args_ls[0]
+                line = "{} {} {}".format(command, class_name, args_ls[0])
             # print("Line --->", line)
             self.onecmd(line)
 
