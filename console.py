@@ -179,24 +179,34 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(class_name)
             elif command == 'count':
                 self.count(class_name)
+
         elif dic_rgx:
             # Update instance's values from dictionary through console
             command = dic_rgx.group(2)
             class_name = dic_rgx.group(1)
             obj_id = dic_rgx.group(3).replace('"', '')
+
+            if class_name not in HBNBCommand.classes:
+                print("** class doesn't exist **")
+                return
+            if "{}.{}".format(class_name, obj_id) not in storage.all():
+                print("** no instance found **")
+                return
+
             try:
                 obj_dic = json.loads(dic_rgx.group(4).replace("'", '"'))
             except Exception:
                 print("** value missing **")
                 return
-            if class_name in HBNBCommand.classes and command == 'update':
+            if command == 'update':
                 for key, value in obj_dic.items():
                     # 'line': input to execute through console onecmd method
                     line = '{} {} {} {} "{}"'.format(
                             command, class_name, obj_id, key, str(value))
                     self.onecmd(line)
             else:
-                print("** class name missing **")
+                print("** Check Input **")
+
         elif arg_rgx:
             # Commands with arguments
             command = arg_rgx.group(2)
